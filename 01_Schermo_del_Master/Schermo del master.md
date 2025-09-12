@@ -5,12 +5,12 @@ action QuickAdd: Nuovo Feat
 ```
 
 
-[[dice: 2d6+1]]
+`dice: 2d6+1`
 
 ```dataview
 TABLE name AS Feat, prerequisites, source_book AS Source
 FROM "03_Regole/03.05_Feat"
-WHERE contains(prerequisites, "Weapon Focus (Pistols)")
+WHERE contains(prerequisites, "Strength 13")
 SORT name
 ```
 
