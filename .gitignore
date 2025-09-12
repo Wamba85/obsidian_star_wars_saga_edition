@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+.obsidian/cache/
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.venv/
