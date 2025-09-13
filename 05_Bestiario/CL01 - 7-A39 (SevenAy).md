@@ -7,11 +7,11 @@ type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 4"
 cl: 1
 initiative: ""
-senses: Perception +8
-perception: ""
-reflex: ""
-fortitude: ""
-will: ""
+senses: ""
+perception: +8
+reflex: "]]: 11 (Flat-Footed: 10)"
+fortitude: "]]: 10"
+will: "]]: 11"
 defenseFeats: []
 hp: 10
 threshold: 10
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
 source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
-import_hash: a72dccd86f862f35fc37eb629bd82afc4183b158
-imported_at: "2025-09-13T16:11:17Z"
+import_hash: 330b33ec8b1eae43dcb48790bf21f78a63a1b760
+imported_at: "2025-09-13T16:17:58Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

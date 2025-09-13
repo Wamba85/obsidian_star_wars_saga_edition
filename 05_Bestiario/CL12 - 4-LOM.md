@@ -7,11 +7,11 @@ type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 1/Noble 1/Scoundrel 5/Scout 3/Bounty Hunter 3"
 cl: 12
 initiative: ""
-senses: Perception +12
-perception: ""
-reflex: ""
-fortitude: ""
-will: ""
+senses: ""
+perception: +12
+reflex: "]]: 27 (Flat-Footed: 26)"
+fortitude: "]]: 24"
+will: "]]: 25"
 defenseFeats: []
 hp: 54
 threshold: 24
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/4-LOM"
 source_book: ""
 tags: [bestiario, swse, cl/12, type/heroic]
-import_hash: b3165e7a2343a7c9edc0d597a4aed4e6d88363c8
-imported_at: "2025-09-13T16:11:15Z"
+import_hash: c1c004e54bcb70bca5077679ba6d891f320450af
+imported_at: "2025-09-13T16:17:56Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

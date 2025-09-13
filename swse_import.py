@@ -244,47 +244,48 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     # Initiative
     initiative = clean_text(_grab_first(re.compile(r"\bInitiative\s*:\s*([^\n]+)", re.IGNORECASE), t))
 
-    # Senses + Perception
-    senses_raw = _grab_first(re.compile(r"\bSenses\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    # Senses + Perception (ripulisce markup e separa Perception)
+    senses_match = _grab_first(re.compile(r"\bSenses\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    senses_clean = clean_text(senses_match)
     perception_num = None
-    if senses_raw:
-        m = re.search(r'Perception\s*\+?(-?\d+)', senses_raw, re.IGNORECASE)
-        if m:
-            perception_num = m.group(1)
-            senses_raw = re.sub(r'[,;]?\s*Perception\s*\+?-?\d+', '', senses_raw, flags=re.IGNORECASE)
+
+    m = re.search(r'\bPerception\b\s*\+?(-?\d+)', senses_clean, re.IGNORECASE)
+    if m:
+        perception_num = m.group(1)
+        senses_clean = re.sub(r'[,;]?\s*\bPerception\b\s*\+?-?\d+', '', senses_clean, flags=re.IGNORECASE).strip(" ,;")
+
     if perception_num is None:
-        m = re.search(r"^\s*'{0,3}\s*Perception\s*\+?(-?\d+)\s*$", t, re.IGNORECASE | re.MULTILINE)
+        m = re.search(r"^\s*(?:'{2,3})?\s*(?:\[\[)?Perception(?:\]\])?\s*\+?(-?\d+)\s*$",
+                    t, re.IGNORECASE | re.MULTILINE)
         if m:
             perception_num = m.group(1)
-            senses_raw = ""
-    senses = clean_text(senses_raw)
+
+    senses = senses_clean
     perception = ""
     if perception_num is not None:
         perception = perception_num if str(perception_num).startswith(("+","-")) else f"+{perception_num}"
 
-    # Defenses (base + varianti tra parentesi; extra dopo ';')
-    def_line = _grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t)
-    def_main, def_extras = def_line, ""
+    # Defenses (valori + varianti tra parentesi; extra dopo ';' -> defenseFeats)
+    def_line_raw = _grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    def_line = clean_text(def_line_raw)
     if ";" in def_line:
         def_main, def_extras = def_line.split(";", 1)
+    else:
+        def_main, def_extras = def_line, ""
 
-    def_main = clean_text(def_main)
-    def_extras = clean_text(def_extras)
-
-    def extract_def(name, main):
-        # cerca nel testo completo prima, poi nella riga "Defenses"
-        m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;\n]*)", t, re.IGNORECASE)
-        if not m and main:
-            m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;]*)", main, re.IGNORECASE)
-        return clean_text(m.group(1)) if m else ""
-
-    reflex    = extract_def("Reflex",    def_main)
-    fortitude = extract_def("Fortitude", def_main)
-    will      = extract_def("Will",      def_main)
-
-    # lista di talent/feat dopo ';' (es. Block, Deflect, …)
     defense_feats = split_list(def_extras)
 
+    def extract_def(name: str) -> str:
+        # Cerca prima su tutto il testo per gestire markup ('''29'''), poi nella riga "Defenses"
+        pat = rf"\b{name}(?:\s*Defense)?\s*:?\s*([^\n,;]+)"
+        m = re.search(pat, t, re.IGNORECASE)
+        if not m:
+            m = re.search(pat, def_main, re.IGNORECASE)
+        return clean_text(m.group(1)) if m else ""
+
+    reflex    = extract_def("Reflex")
+    fortitude = extract_def("Fortitude")
+    will      = extract_def("Will")
 
     # HP e Threshold
     hp_line        = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:?\s*([^\n]+)", re.IGNORECASE), t)

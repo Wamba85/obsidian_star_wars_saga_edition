@@ -7,11 +7,11 @@ type: Heroic
 type_line: "Medium 4th-Degree Droid Nonheroic 3/Noble 3/Scoundrel 3/Independent Droid 1"
 cl: 8
 initiative: ""
-senses: Perception +7
-perception: ""
-reflex: ""
-fortitude: ""
-will: ""
+senses: ""
+perception: +7
+reflex: "]]: 19 (Flat-Footed: 19)"
+fortitude: "]]: 15"
+will: "]]: 23 (28 vs Reprogramming)"
 defenseFeats: []
 hp: 42
 threshold: 15
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0-0-0"
 source_book: ""
 tags: [bestiario, swse, cl/8, type/heroic]
-import_hash: 24ede430b2a5689b78e37bd62b59bd665e4c524d
-imported_at: "2025-09-13T16:11:13Z"
+import_hash: 685aa045bde627a1cd2c28d923a315f9eff62ff6
+imported_at: "2025-09-13T16:17:54Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

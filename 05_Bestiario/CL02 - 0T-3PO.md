@@ -7,11 +7,11 @@ type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 1/Scoundrel 2"
 cl: 2
 initiative: ""
-senses: Perception +2
-perception: ""
-reflex: ""
-fortitude: ""
-will: ""
+senses: ""
+perception: +2
+reflex: "]]: 13 (Flat-Footed: 13)"
+fortitude: "]]: 11"
+will: "]]: 14"
 defenseFeats: []
 hp: 9
 threshold: 11
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0T-3PO"
 source_book: ""
 tags: [bestiario, swse, cl/2, type/heroic]
-import_hash: 18d2b8aae56e3cea08955a6c98bae28f2667ba7f
-imported_at: "2025-09-13T16:11:14Z"
+import_hash: b75a358e7c5e24774633e97e920bb0f8cd5b4673
+imported_at: "2025-09-13T16:17:55Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
