@@ -90,3 +90,37 @@ action QuickAdd: Nuovo Talento
 ---
 
 **Link utili nel Vault:** [[03_Regole/03.04_Talenti]] • [[03_Regole/03.05_Feat]] • [[03_Regole/03.06_Poteri_della_Forza]] • [[05_Bestiario]] • [[06_Luoghi]] • [[07_Personaggi_PG]] • [[08_Personaggi_NPC]]
+
+
+```statblock
+custom: SWSE Creature
+data:
+  name: 7-A39 (SevenAy)
+  type: Heroic
+  cl: 1
+  initiative:
+  senses: Perception +8
+  perception:
+  reflex:
+  fortitude:
+  will:
+  hp: 10
+  threshold: 10
+  speed: Immobile
+  melee: []
+  ranged: []
+  attackOptions:
+  specialActions:
+  specialQualities: []
+  talents: []
+  feats: []
+  skills: []
+  useTheForce:
+  forcePowers: []
+  equipment: []
+  abilities: Str 10; Dex 12; Con -; Int 14; Wis 13; Cha 14
+  languages: Basic, Binary; Translator Unit (DC 10)
+  notes:
+  monster: "7-A39 (SevenAy)"
+  source: SWSE Wiki – https://swse.fandom.com/wiki/7-A39
+  ```
