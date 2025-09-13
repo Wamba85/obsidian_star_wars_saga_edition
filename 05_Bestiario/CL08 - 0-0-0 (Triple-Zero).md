@@ -12,6 +12,7 @@ perception: ""
 reflex: ""
 fortitude: ""
 will: ""
+defenseFeats: []
 hp: 42
 threshold: 15
 speed: 6 Squares (Walking)
@@ -33,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0-0-0"
 source_book: ""
 tags: [bestiario, swse, cl/8, type/heroic]
-import_hash: 93876720c8c6b1f52c2e2ad4890135271ab5db44
-imported_at: "2025-09-13T15:53:37Z"
+import_hash: 24ede430b2a5689b78e37bd62b59bd665e4c524d
+imported_at: "2025-09-13T16:08:07Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

@@ -12,6 +12,7 @@ perception: ""
 reflex: ""
 fortitude: ""
 will: ""
+defenseFeats: []
 hp: 137
 threshold: 28
 speed: 6 Squares
@@ -33,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/A'Sharad_Hett"
 source_book: ""
 tags: [bestiario, swse, cl/14, type/heroic]
-import_hash: 727e931607f672628b3a62761d30d707783d40a0
-imported_at: "2025-09-13T15:53:41Z"
+import_hash: 81f91f52c392c880a9e4c3d832ca24f80a1f20ae
+imported_at: "2025-09-13T16:08:11Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

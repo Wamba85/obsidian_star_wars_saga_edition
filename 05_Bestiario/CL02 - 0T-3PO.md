@@ -12,6 +12,7 @@ perception: ""
 reflex: ""
 fortitude: ""
 will: ""
+defenseFeats: []
 hp: 9
 threshold: 11
 speed: 6 Squares (Walking)
@@ -33,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0T-3PO"
 source_book: ""
 tags: [bestiario, swse, cl/2, type/heroic]
-import_hash: 31606c9f9c730a6d030655cdf8c03315a982d493
-imported_at: "2025-09-13T15:53:38Z"
+import_hash: 18d2b8aae56e3cea08955a6c98bae28f2667ba7f
+imported_at: "2025-09-13T16:08:08Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

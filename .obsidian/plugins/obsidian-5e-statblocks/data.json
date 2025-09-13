@@ -97,31 +97,14 @@
               "conditioned": true
             },
             {
-              "type": "property",
-              "id": "ref",
-              "display": "Reflex",
+              "type": "traits",
+              "id": "defense-feats",
               "properties": [
-                "reflex"
+                "defenseFeats"
               ],
-              "conditioned": true
-            },
-            {
-              "type": "property",
-              "id": "fort",
-              "display": "Fortitude",
-              "properties": [
-                "fortitude"
-              ],
-              "conditioned": true
-            },
-            {
-              "type": "property",
-              "id": "will",
-              "display": "Will",
-              "properties": [
-                "will"
-              ],
-              "conditioned": true
+              "heading": "Defense Feats/Talents",
+              "conditioned": true,
+              "dice": false
             },
             {
               "type": "property",

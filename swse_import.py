@@ -262,22 +262,29 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     if perception_num is not None:
         perception = perception_num if str(perception_num).startswith(("+","-")) else f"+{perception_num}"
 
-    # Defenses
-    defense_any = clean_text(_grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t))
+    # Defenses (base + varianti tra parentesi; extra dopo ';')
+    def_line = _grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    def_main, def_extras = def_line, ""
+    if ";" in def_line:
+        def_main, def_extras = def_line.split(";", 1)
 
-    def grab_def(name):
+    def_main = clean_text(def_main)
+    def_extras = clean_text(def_extras)
+
+    def extract_def(name, main):
+        # cerca nel testo completo prima, poi nella riga "Defenses"
         m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;\n]*)", t, re.IGNORECASE)
-        if m:
-            return clean_text(m.group(1))
-        if defense_any:
-            m = re.search(rf"\b{name}(?:\s*Defense)?\s*([0-9][^,;]*)", defense_any, re.IGNORECASE)
-            if m:
-                return clean_text(m.group(1))
-        return ""
+        if not m and main:
+            m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;]*)", main, re.IGNORECASE)
+        return clean_text(m.group(1)) if m else ""
 
-    reflex    = grab_def("Reflex")
-    fortitude = grab_def("Fortitude")
-    will      = grab_def("Will")
+    reflex    = extract_def("Reflex",    def_main)
+    fortitude = extract_def("Fortitude", def_main)
+    will      = extract_def("Will",      def_main)
+
+    # lista di talent/feat dopo ';' (es. Block, Deflect, …)
+    defense_feats = split_list(def_extras)
+
 
     # HP e Threshold
     hp_line        = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:?\s*([^\n]+)", re.IGNORECASE), t)
@@ -353,6 +360,7 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
         'reflex': reflex,
         'fortitude': fortitude,
         'will': will,
+        'defenseFeats': defense_feats,
         'hp': hp,
         'threshold': threshold,
         'speed': speed,
@@ -524,7 +532,7 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
 
             payload = {
                 k: blk[k] for k in [
-                    'name','type_line','cl','initiative','senses','perception','reflex','fortitude','will',
+                    'name','type_line','cl','initiative','senses','perception','reflex','fortitude','will', 'defenseFeats',
                     'hp','threshold','speed','melee','ranged','attackOptions','specialActions',
                     'specialQualities','talents','feats','skills','useTheForce','forcePowers',
                     'equipment','abilities','stats','languages','notes','source_book'
@@ -563,6 +571,7 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
                 'reflex': blk['reflex'],
                 'fortitude': blk['fortitude'],
                 'will': blk['will'],
+                'defenseFeats': blk['defenseFeats'],
                 'hp': blk['hp'],
                 'threshold': blk['threshold'],
                 'speed': blk['speed'],

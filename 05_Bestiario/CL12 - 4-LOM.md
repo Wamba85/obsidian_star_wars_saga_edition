@@ -12,6 +12,7 @@ perception: ""
 reflex: ""
 fortitude: ""
 will: ""
+defenseFeats: []
 hp: 54
 threshold: 24
 speed: 6 Squares (Walking); Expert Tracker
@@ -33,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/4-LOM"
 source_book: ""
 tags: [bestiario, swse, cl/12, type/heroic]
-import_hash: 91a6ac8813e2e228dbc2574545eb8b42319bd706
-imported_at: "2025-09-13T15:53:39Z"
+import_hash: b3165e7a2343a7c9edc0d597a4aed4e6d88363c8
+imported_at: "2025-09-13T16:08:09Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

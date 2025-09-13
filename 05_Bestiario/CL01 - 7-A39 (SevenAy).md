@@ -12,6 +12,7 @@ perception: ""
 reflex: ""
 fortitude: ""
 will: ""
+defenseFeats: []
 hp: 10
 threshold: 10
 speed: Immobile
@@ -33,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
 source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
-import_hash: ad628ea1c4989a25061f0ae83ba9868a46a8deab
-imported_at: "2025-09-13T15:53:40Z"
+import_hash: a72dccd86f862f35fc37eb629bd82afc4183b158
+imported_at: "2025-09-13T16:08:10Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
