@@ -4,14 +4,18 @@
 swse_import.py — Importa Opponents SWSE (Heroic/Nonheroic/Beast/General/Droid)
 nel Vault Obsidian per Fantasy Statblocks (layout: "SWSE Creature").
 
-Correzioni incluse:
-- Campi puliti dal markup wiki (''' e [[link]]).
-- Perception separata da Senses e mai forzata dentro Senses.
-- HP e Damage Threshold separati anche se sulla stessa riga.
-- Melee/Ranged come array di voci singole, non stringa unica.
-- Abilities sia come stringa normalizzata ("Str 10; Dex 12; ...")
-  sia come oggetto `stats` {Str, Dex, Con, Int, Wis, Cha} per la tabella del layout.
-- Frontmatter compatibile con il layout fornito e con autoParse.
+Modifiche chiave:
+- Pulizia markup wiki (''', wikilink) su tutti i campi testuali.
+- Perception estratta e rimossa da Senses quando accodata o su riga singola.
+- Difese lette anche da riga unica "Defenses ..." e senza i ":".
+- HP/Threshold/Speed più tolleranti sui formati.
+- Melee/Ranged come array di voci singole.
+- Abilities:
+  * stringa normalizzata "Str 10; Dex 12; Con -; Int 14; Wis 13; Cha 14"
+  * stats come LISTA [Str, Dex, Con, Int, Wis, Cha] per la tabella del layout.
+- Frontmatter:
+  * bestiary: true sempre
+  * monster: <name>, layoutId: "swse-creature-layout", layout: "SWSE Creature"
 """
 import os
 import re
@@ -41,14 +45,12 @@ OPPONENT_CATEGORIES = {
 }
 
 ENTITY_CONFIG = {
-    # altre entità lasciate per compatibilità, non necessarie al bestiario
     'opponents': {'category': list(OPPONENT_CATEGORIES.values()), 'out_dir': '05_Bestiario'}
 }
 
 # ---------- UTIL ----------
 def title_to_slug(title: str) -> str:
-    slug = title.strip().lower()
-    slug = slug.replace('/', ' ')
+    slug = title.strip().lower().replace('/', ' ')
     slug = re.sub(r'[^a-z0-9]+', '-', slug).strip('-')
     return slug
 
@@ -106,14 +108,13 @@ def clean_text(txt: str) -> str:
     if not txt:
         return ""
     s = mwparserfromhell.parse(txt).strip_code()
-    s = re.sub(r"'{2,3}", "", s)   # rimuovi '' e '''
+    s = re.sub(r"'{2,3}", "", s)           # rimuove '' e '''
     s = re.sub(r"\s+", " ", s).strip(" \t,;")
     return s
 
 def split_list(s: str) -> list[str]:
     if not s:
         return []
-    # privilegia ';' come separatore; altrimenti spezza su virgola non seguita da numero negativo
     parts = re.split(r';\s*', s)
     if len(parts) == 1:
         parts = re.split(r',\s*(?=[A-Z0-9(])', s)
@@ -123,51 +124,34 @@ def split_list(s: str) -> list[str]:
 def explode_attacks(lines: list[str]) -> list[str]:
     out: list[str] = []
     for ln in lines or []:
-        # una riga "Melee: A; B; C" -> tre voci
-        parts = re.split(r'\s*;\s*', ln)
-        for p in parts:
+        for p in re.split(r'\s*;\s*', ln):
             p = clean_text(p)
             if p:
                 out.append(p)
     return out
 
-def parse_stats(abilities_text: str) -> tuple[str, dict]:
+def parse_stats(abilities_text: str) -> tuple[str, list]:
     """
     Ritorna:
       - abilities_str: "Str 10; Dex 12; Con -; Int 14; Wis 13; Cha 14"
-      - stats_obj:     {"Str": 10, "Dex": 12, "Con": null, "Int": 14, "Wis": 13, "Cha": 14}
-    Accetta sia forme estese (Strength, Dexterity...) sia abbreviazioni.
+      - stats_list:    [10, 12, null, 14, 13, 14]
+    Accetta sia forme estese che abbreviazioni.
     """
     cleaned = clean_text(abilities_text)
-    if not cleaned:
-        return "", {"Str": None, "Dex": None, "Con": None, "Int": None, "Wis": None, "Cha": None}
-
-    # normalizza nomi lunghi in brevi
-    rep = {
-        r'\bStrength\b': 'Str', r'\bDexterity\b': 'Dex', r'\bConstitution\b': 'Con',
-        r'\bIntelligence\b': 'Int', r'\bWisdom\b': 'Wis', r'\bCharisma\b': 'Cha'
-    }
-    for pat, repl in rep.items():
-        cleaned = re.sub(pat, repl, cleaned, flags=re.IGNORECASE)
-
-    # estrai coppie Abbrev +/-numero o "-"
-    stats = {"Str": None, "Dex": None, "Con": None, "Int": None, "Wis": None, "Cha": None}
-    for key in list(stats.keys()):
-        m = re.search(rf'\b{key}\b\s*([+\-]?\d+|—|-)', cleaned, flags=re.IGNORECASE)
-        if m:
-            val = m.group(1)
-            if val in ('-', '—'):
-                stats[key] = None
-            else:
-                try:
-                    stats[key] = int(val)
-                except ValueError:
-                    stats[key] = None
-
-    # ricostruisci stringa normalizzata ordinata
-    seq = [f"{k} {stats[k] if stats[k] is not None else '-'}" for k in ["Str","Dex","Con","Int","Wis","Cha"]]
-    abilities_str = "; ".join(seq)
-    return abilities_str, stats
+    base = {"Str": None, "Dex": None, "Con": None, "Int": None, "Wis": None, "Cha": None}
+    if cleaned:
+        for long, short in [("Strength","Str"),("Dexterity","Dex"),("Constitution","Con"),
+                            ("Intelligence","Int"),("Wisdom","Wis"),("Charisma","Cha")]:
+            cleaned = re.sub(rf"\b{long}\b", short, cleaned, flags=re.IGNORECASE)
+        for k in list(base.keys()):
+            m = re.search(rf"\b{k}\b\s*([+\-]?\d+|—|-)", cleaned, flags=re.IGNORECASE)
+            if m:
+                v = m.group(1)
+                base[k] = None if v in ("-","—") else int(v)
+    abilities_str = "; ".join(f"{k} {base[k] if base[k] is not None else '-'}"
+                              for k in ["Str","Dex","Con","Int","Wis","Cha"])
+    stats_list = [base["Str"], base["Dex"], base["Con"], base["Int"], base["Wis"], base["Cha"]]
+    return abilities_str, stats_list
 
 # ---------- FETCH ----------
 def fetch_category_members(cats, limit=0):
@@ -235,7 +219,7 @@ def parse_opponent_sections(page_title: str, wikitext: str) -> list[dict]:
 def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) -> dict:
     t = text
 
-    # riga tipo (taglia/tipo/livelli) = prima riga utile non di intestazione/campi
+    # type line = prima riga utile non di intestazione/campi
     type_line = ""
     for ln in t.splitlines():
         ln = ln.strip()
@@ -258,25 +242,21 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
         cl = int(mcl.group(1)) if mcl else None
 
     # Initiative
-    initiative = _grab_first(re.compile(r"\bInitiative\s*:\s*([^\n]+)", re.IGNORECASE), t)
-    initiative = clean_text(initiative)
+    initiative = clean_text(_grab_first(re.compile(r"\bInitiative\s*:\s*([^\n]+)", re.IGNORECASE), t))
 
     # Senses + Perception
     senses_raw = _grab_first(re.compile(r"\bSenses\s*:?\s*([^\n]+)", re.IGNORECASE), t)
     perception_num = None
-
     if senses_raw:
         m = re.search(r'Perception\s*\+?(-?\d+)', senses_raw, re.IGNORECASE)
         if m:
             perception_num = m.group(1)
             senses_raw = re.sub(r'[,;]?\s*Perception\s*\+?-?\d+', '', senses_raw, flags=re.IGNORECASE)
-
     if perception_num is None:
         m = re.search(r"^\s*'{0,3}\s*Perception\s*\+?(-?\d+)\s*$", t, re.IGNORECASE | re.MULTILINE)
         if m:
             perception_num = m.group(1)
             senses_raw = ""
-
     senses = clean_text(senses_raw)
     perception = ""
     if perception_num is not None:
@@ -286,40 +266,38 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     defense_any = clean_text(_grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t))
 
     def grab_def(name):
-        # prova "Reflex: ..." oppure "Reflex ..." ovunque
         m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;\n]*)", t, re.IGNORECASE)
-        if m: return clean_text(m.group(1))
+        if m:
+            return clean_text(m.group(1))
         if defense_any:
-            m = re.search(rf"\b{name}\b(?:\s*Defense)?\s*([0-9][^,;]*)", defense_any, re.IGNORECASE)
-            if m: return clean_text(m.group(1))
+            m = re.search(rf"\b{name}(?:\s*Defense)?\s*([0-9][^,;]*)", defense_any, re.IGNORECASE)
+            if m:
+                return clean_text(m.group(1))
         return ""
 
     reflex    = grab_def("Reflex")
     fortitude = grab_def("Fortitude")
     will      = grab_def("Will")
 
-    # HP e Threshold (anche su stessa riga)
+    # HP e Threshold
     hp_line        = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:?\s*([^\n]+)", re.IGNORECASE), t)
     threshold_line = _grab_first(re.compile(r"\bDamage Threshold\s*:?\s*([^\n]+)", re.IGNORECASE), t)
 
     def extract_first_int(s: str):
-        if not s: return ""
+        if not s:
+            return ""
         m = re.search(r'(-?\d+)', s)
         return int(m.group(1)) if m else ""
 
     hp = extract_first_int(hp_line)
     threshold = extract_first_int(threshold_line)
-    # se hp_line contiene anche "Damage Threshold: N", rimuovi per sicurezza dal testo hp
-    # (ma noi usiamo int, quindi non serve oltre a pulizia)
 
     # Speed
     speed = clean_text(_grab_first(re.compile(r"\bSpeed\s*:?\s*([^\n]+)", re.IGNORECASE), t))
 
     # Attacks
-    melee_lines = _grab_all_lines("Melee", t)
-    ranged_lines = _grab_all_lines("Ranged", t)
-    melee = explode_attacks(melee_lines)
-    ranged = explode_attacks(ranged_lines)
+    melee = explode_attacks(_grab_all_lines("Melee", t))
+    ranged = explode_attacks(_grab_all_lines("Ranged", t))
 
     # Options / Actions
     attack_opts     = clean_text(_grab_first(re.compile(r"\bAttack Options\s*:?\s*([^\n]+)", re.IGNORECASE), t))
@@ -343,9 +321,9 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     eq_line = _grab_first(re.compile(r"(?:Possessions|Equipment|Weapons)\s*:\s*([^\n]+)", re.IGNORECASE), t)
     equipment = split_list(eq_line)
 
-    # Abilities -> abilities string + stats object
+    # Abilities
     abil_raw = _grab_first(re.compile(r"\bAbilities\s*:\s*([^\n]+)", re.IGNORECASE), t)
-    abilities_str, stats_obj = parse_stats(abil_raw)
+    abilities_str, stats_list = parse_stats(abil_raw)
 
     # Languages
     languages = clean_text(_grab_first(re.compile(r"\bLanguages\s*:\s*([^\n]+)", re.IGNORECASE), t))
@@ -363,7 +341,6 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     # Source
     m_source = re.search(r"Reference Book\s*:\s*([^\n(]+)", t, re.IGNORECASE)
     source_book = clean_text(m_source.group(1)) if m_source else ""
-    # type line pulito
     type_line_clean = clean_text(type_line)
 
     return {
@@ -391,7 +368,7 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
         'forcePowers': force_powers,
         'equipment': equipment,
         'abilities': abilities_str,
-        'stats': stats_obj,
+        'stats': stats_list,
         'languages': languages,
         'notes': notes,
         'source_book': source_book
@@ -478,7 +455,7 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
     logf = open(log_file, "a", encoding="utf-8")
 
     slug_index = build_slug_index(vault_path)
-    link_resolver = make_link_resolver(vault_path, slug_index)
+    make_link_resolver(vault_path, slug_index)  # preparato se in futuro servono link locali
 
     # raccolta pagine opponents
     members = []
@@ -545,7 +522,6 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
             cl_int = int(blk['cl']) if str(blk['cl']).isdigit() else 0
             logical_type = infer_unit_kind(unit_kind_hint, blk)
 
-            # payload per hash e frontmatter
             payload = {
                 k: blk[k] for k in [
                     'name','type_line','cl','initiative','senses','perception','reflex','fortitude','will',
@@ -573,16 +549,14 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
             tags = ["bestiario", "swse", f"cl/{cl_int}", f"type/{logical_type.lower()}"]
 
             fm = {
-                # info sistema
                 'system': 'swse',
-                # identificazione
-                'monster': name,          # aiuta l’indicizzazione del plugin
+                'bestiary': True,
+                'monster': name,
                 'name': name,
-                'bestiary': True, 
-                'type': logical_type,     # header layout
-                'type_line': blk['type_line'],  # dettaglio di classe/taglia
+                'type': logical_type,
+                'type_line': blk['type_line'],
                 'cl': cl_int,
-                # core
+
                 'initiative': blk['initiative'],
                 'senses': blk['senses'],
                 'perception': blk['perception'],
@@ -592,42 +566,41 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
                 'hp': blk['hp'],
                 'threshold': blk['threshold'],
                 'speed': blk['speed'],
-                # offense
+
                 'melee': blk['melee'],
                 'ranged': blk['ranged'],
                 'attackOptions': blk['attackOptions'],
                 'specialActions': blk['specialActions'],
-                # features
+
                 'specialQualities': blk['specialQualities'],
                 'talents': blk['talents'],
                 'feats': blk['feats'],
                 'skills': blk['skills'],
-                # force
+
                 'useTheForce': blk['useTheForce'],
                 'forcePowers': blk['forcePowers'],
-                # gear
+
                 'equipment': blk['equipment'],
-                # abilities
-                'abilities': blk['abilities'],  # stringa normalizzata
-                'stats': blk['stats'],          # oggetto per tabella del layout
-                # misc
+
+                'abilities': blk['abilities'],
+                'stats': blk['stats'],
+
                 'languages': blk['languages'],
                 'notes': blk['notes'],
                 'source': f"SWSE Wiki – {src_url}",
                 'source_book': blk['source_book'] or "",
-                # meta
+
                 'tags': tags,
                 'import_hash': hash_val,
                 'imported_at': iso_now_utc(),
-                # Fantasy Statblocks
+
                 'statblock': True,
                 'layoutId': 'swse-creature-layout',
                 'layout': "SWSE Creature"
             }
 
             yaml = dump_frontmatter(fm)
-            body = ""  # opzionale: aggiungere fluff pulito qui
-            note_content = yaml + ("\n" + body if body else "\n")
+            note_content = yaml + "\n"
 
             if dry_run:
                 action = "Would CREATE" if not exists else "Would UPDATE"
