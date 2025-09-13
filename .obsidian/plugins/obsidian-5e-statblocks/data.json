@@ -1,7 +1,367 @@
 {
   "monsters": [],
   "defaultLayouts": {},
-  "layouts": [],
+  "layouts": [
+    {
+      "id": "swse-creature-layout",
+      "name": "SWSE Creature",
+      "version": 1,
+      "blocks": [
+        {
+          "type": "inline",
+          "id": "hdr-inline",
+          "properties": [],
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "group",
+              "id": "hdr-group",
+              "properties": [
+                "name",
+                "type",
+                "cl"
+              ],
+              "nested": [
+                {
+                  "type": "heading",
+                  "id": "hdr-name",
+                  "properties": [
+                    "name"
+                  ],
+                  "conditioned": true,
+                  "size": 1
+                },
+                {
+                  "type": "subheading",
+                  "id": "hdr-sub",
+                  "properties": [
+                    "type",
+                    "cl"
+                  ],
+                  "conditioned": true,
+                  "separator": " • CL "
+                }
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "image",
+              "id": "image",
+              "properties": [
+                "image"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "id": "core-stats",
+          "properties": [
+            "initiative",
+            "senses",
+            "perception",
+            "reflex",
+            "fortitude",
+            "will",
+            "hp",
+            "threshold",
+            "speed"
+          ],
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "property",
+              "id": "init",
+              "display": "Initiative",
+              "properties": [
+                "initiative"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "senses",
+              "display": "Senses",
+              "properties": [
+                "senses"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "perc",
+              "display": "Perception",
+              "properties": [
+                "perception"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "ref",
+              "display": "Reflex",
+              "properties": [
+                "reflex"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "fort",
+              "display": "Fortitude",
+              "properties": [
+                "fortitude"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "will",
+              "display": "Will",
+              "properties": [
+                "will"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "hp",
+              "display": "Hit Points",
+              "properties": [
+                "hp"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "thresh",
+              "display": "Damage Threshold",
+              "properties": [
+                "threshold"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "speed",
+              "display": "Speed",
+              "properties": [
+                "speed"
+              ],
+              "conditioned": true
+            }
+          ],
+          "conditioned": true
+        },
+        {
+          "type": "table",
+          "id": "abilities",
+          "properties": [
+            "stats"
+          ],
+          "headers": [
+            "Str",
+            "Dex",
+            "Con",
+            "Int",
+            "Wis",
+            "Cha"
+          ],
+          "calculate": true,
+          "hasRule": true,
+          "conditioned": true
+        },
+        {
+          "type": "group",
+          "id": "offense",
+          "heading": "Offense",
+          "properties": [
+            "melee",
+            "ranged",
+            "attackOptions",
+            "specialActions"
+          ],
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "traits",
+              "id": "melee",
+              "properties": [
+                "melee"
+              ],
+              "heading": "Melee Attacks",
+              "conditioned": true,
+              "dice": true
+            },
+            {
+              "type": "traits",
+              "id": "ranged",
+              "properties": [
+                "ranged"
+              ],
+              "heading": "Ranged Attacks",
+              "conditioned": true,
+              "dice": true
+            },
+            {
+              "type": "property",
+              "id": "atkopts",
+              "display": "Attack Options",
+              "properties": [
+                "attackOptions"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "spcact",
+              "display": "Special Actions",
+              "properties": [
+                "specialActions"
+              ],
+              "conditioned": true
+            }
+          ],
+          "conditioned": true
+        },
+        {
+          "type": "traits",
+          "id": "special-qualities",
+          "properties": [
+            "specialQualities"
+          ],
+          "heading": "Special Qualities",
+          "conditioned": true,
+          "dice": false
+        },
+        {
+          "type": "group",
+          "id": "talents-feats-skills",
+          "properties": [
+            "talents",
+            "feats",
+            "skills"
+          ],
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "traits",
+              "id": "talents",
+              "properties": [
+                "talents"
+              ],
+              "heading": "Talents",
+              "conditioned": true,
+              "dice": false
+            },
+            {
+              "type": "traits",
+              "id": "feats",
+              "properties": [
+                "feats"
+              ],
+              "heading": "Feats",
+              "conditioned": true,
+              "dice": false
+            },
+            {
+              "type": "traits",
+              "id": "skills",
+              "properties": [
+                "skills"
+              ],
+              "heading": "Skills",
+              "conditioned": true,
+              "dice": false
+            }
+          ],
+          "conditioned": true
+        },
+        {
+          "type": "group",
+          "id": "force",
+          "properties": [
+            "useTheForce",
+            "forcePowers"
+          ],
+          "heading": "The Force",
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "property",
+              "id": "utf",
+              "display": "Use the Force",
+              "properties": [
+                "useTheForce"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "traits",
+              "id": "forcePowers",
+              "properties": [
+                "forcePowers"
+              ],
+              "heading": "Force Powers",
+              "conditioned": true,
+              "dice": false
+            }
+          ],
+          "conditioned": true
+        },
+        {
+          "type": "traits",
+          "id": "equipment",
+          "properties": [
+            "equipment"
+          ],
+          "heading": "Equipment",
+          "conditioned": true,
+          "dice": false
+        },
+        {
+          "type": "text",
+          "id": "notes",
+          "properties": [
+            "notes"
+          ],
+          "heading": "Notes",
+          "conditioned": true,
+          "text": null
+        },
+        {
+          "type": "group",
+          "id": "footer",
+          "properties": [
+            "languages",
+            "source"
+          ],
+          "hasRule": true,
+          "nested": [
+            {
+              "type": "property",
+              "id": "langs",
+              "display": "Languages",
+              "properties": [
+                "languages"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "source",
+              "display": "Source",
+              "properties": [
+                "source"
+              ],
+              "conditioned": true
+            }
+          ],
+          "conditioned": true
+        }
+      ]
+    }
+  ],
   "default": "basic-5e-layout",
   "useDice": true,
   "renderDice": false,
@@ -13,9 +373,9 @@
     "patch": 1
   },
   "paths": [
-    "/"
+    "05_Bestiario"
   ],
-  "autoParse": false,
+  "autoParse": true,
   "disableSRD": false,
   "tryToRenderLinks": true,
   "debug": false,
