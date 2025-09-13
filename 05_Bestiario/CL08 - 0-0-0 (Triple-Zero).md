@@ -35,7 +35,7 @@ source: "SWSE Wiki – https://swse.fandom.com/wiki/0-0-0"
 source_book: ""
 tags: [bestiario, swse, cl/8, type/heroic]
 import_hash: 24ede430b2a5689b78e37bd62b59bd665e4c524d
-imported_at: "2025-09-13T16:08:07Z"
+imported_at: "2025-09-13T16:11:13Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

@@ -35,7 +35,7 @@ source: "SWSE Wiki – https://swse.fandom.com/wiki/0T-3PO"
 source_book: ""
 tags: [bestiario, swse, cl/2, type/heroic]
 import_hash: 18d2b8aae56e3cea08955a6c98bae28f2667ba7f
-imported_at: "2025-09-13T16:08:08Z"
+imported_at: "2025-09-13T16:11:14Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

@@ -97,6 +97,33 @@
               "conditioned": true
             },
             {
+              "type": "property",
+              "id": "ref",
+              "display": "Reflex",
+              "properties": [
+                "reflex"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "fort",
+              "display": "Fortitude",
+              "properties": [
+                "fortitude"
+              ],
+              "conditioned": true
+            },
+            {
+              "type": "property",
+              "id": "will",
+              "display": "Will",
+              "properties": [
+                "will"
+              ],
+              "conditioned": true
+            },
+            {
               "type": "traits",
               "id": "defense-feats",
               "properties": [

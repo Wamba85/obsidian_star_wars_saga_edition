@@ -35,7 +35,7 @@ source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
 source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
 import_hash: a72dccd86f862f35fc37eb629bd82afc4183b158
-imported_at: "2025-09-13T16:08:10Z"
+imported_at: "2025-09-13T16:11:17Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

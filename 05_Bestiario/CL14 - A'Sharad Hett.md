@@ -35,7 +35,7 @@ source: "SWSE Wiki – https://swse.fandom.com/wiki/A'Sharad_Hett"
 source_book: ""
 tags: [bestiario, swse, cl/14, type/heroic]
 import_hash: 81f91f52c392c880a9e4c3d832ca24f80a1f20ae
-imported_at: "2025-09-13T16:08:11Z"
+imported_at: "2025-09-13T16:11:18Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

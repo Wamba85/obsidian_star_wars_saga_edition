@@ -35,7 +35,7 @@ source: "SWSE Wiki – https://swse.fandom.com/wiki/4-LOM"
 source_book: ""
 tags: [bestiario, swse, cl/12, type/heroic]
 import_hash: b3165e7a2343a7c9edc0d597a4aed4e6d88363c8
-imported_at: "2025-09-13T16:08:09Z"
+imported_at: "2025-09-13T16:11:15Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
