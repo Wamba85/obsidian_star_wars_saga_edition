@@ -362,7 +362,7 @@
       ]
     }
   ],
-  "default": "basic-5e-layout",
+  "default": "swse-creature-layout",
   "useDice": true,
   "renderDice": false,
   "export": true,
