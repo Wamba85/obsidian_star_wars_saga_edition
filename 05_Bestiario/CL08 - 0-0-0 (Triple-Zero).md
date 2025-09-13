@@ -1,37 +1,45 @@
 ---
 system: swse
+monster: "0-0-0 (Triple-Zero)"
 name: "0-0-0 (Triple-Zero)"
 type: Heroic
-type_line: "Medium [[4th-Degree Droid]] [[Nonheroic]] 3/[[Noble]] 3/[[Scoundrel]] 3/[[Independent Droid]] 1"
+type_line: "Medium 4th-Degree Droid Nonheroic 3/Noble 3/Scoundrel 3/Independent Droid 1"
 cl: 8
 initiative: ""
-senses: "''' [[Perception]] +7"
+senses: "''' Perception +7"
 perception: ""
 reflex: ""
 fortitude: ""
 will: ""
-hp: "42, [[Damage Threshold]]: 15"
+hp: 42
 threshold: ""
-speed: "''' 6 Squares ([[Walking]])"
+speed: "''' 6 Squares (Walking)"
 melee: []
 ranged: []
-attackOptions: "''' '''[[Dastardly Strike]]'''"
-specialActions: "''' '''[[Demand Surrender]]''', [[Intimidator]], '''[[Just a Droid]]''', '''[[Presence]]''', '''[[Stymie]]'''"
+attackOptions: "Dastardly Strike'''"
+specialActions: "Demand Surrender, Intimidator, Just a Droid, Presence, Stymie'''"
 specialQualities: []
 talents: []
 feats: []
 skills: []
 useTheForce: ""
 forcePowers: []
-equipment: ["''' [[Audio Recorder]]"]
-abilities: "''' [[Strength]] 8; [[Dexterity]] 10; [[Constitution]] -; [[Intelligence]] 16; [[Wisdom]] 15; [[Charisma]] 16"
-languages: "''' Basic, [[Binary]], 7 Unassigned; [[Translator Unit]] (DC 5)"
+equipment: ["''' Audio Recorder"]
+abilities: "Str 8; Dex 10; Con -; Int 16; Wis 15; Cha 16"
+stats:
+  Str: 8
+  Dex: 10
+  Con: null
+  Int: 16
+  Wis: 15
+  Cha: 16
+languages: "''' Basic, Binary, 7 Unassigned; Translator Unit (DC 5)"
 notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0-0-0"
-source_book: SWSE Wiki
+source_book: ""
 tags: [bestiario, swse, cl/8, type/heroic]
-import_hash: a75fa41e5201ab66331f38923bcb1ee17817270e
-imported_at: "2025-09-13T13:38:18Z"
+import_hash: d660f1a4c267a55e9736e31961095f76baa051bd
+imported_at: "2025-09-13T13:59:48Z"
 statblock: True
 layout: SWSE Creature
 ---

@@ -1,16 +1,17 @@
 ---
 system: swse
+monster: "7-A39 (SevenAy)"
 name: "7-A39 (SevenAy)"
 type: Heroic
-type_line: "Medium [[3rd-Degree Droid]] [[Nonheroic]] 4"
+type_line: "Medium 3rd-Degree Droid Nonheroic 4"
 cl: 1
 initiative: ""
-senses: "''' [[Perception]] +8"
+senses: "''' Perception +8"
 perception: ""
 reflex: ""
 fortitude: ""
 will: ""
-hp: "10, [[Damage Threshold]]: 10"
+hp: 10
 threshold: ""
 speed: "''' Immobile"
 melee: []
@@ -24,14 +25,21 @@ skills: []
 useTheForce: ""
 forcePowers: []
 equipment: []
-abilities: "''' [[Strength]] 10; [[Dexterity]] 12; [[Constitution]] -; [[Intelligence]] 14; [[Wisdom]] 13; [[Charisma]] 14"
-languages: "''' Basic, [[Binary]]; [[Translator Unit]] (DC 10)"
+abilities: "Str 10; Dex 12; Con -; Int 14; Wis 13; Cha 14"
+stats:
+  Str: 10
+  Dex: 12
+  Con: null
+  Int: 14
+  Wis: 13
+  Cha: 14
+languages: "''' Basic, Binary; Translator Unit (DC 10)"
 notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
-source_book: SWSE Wiki
+source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
-import_hash: 36e87eb944796027a06f919a28826fe65e209f1e
-imported_at: "2025-09-13T13:38:21Z"
+import_hash: 358a159b423fb514b28274eee6d917b87dbc5f2a
+imported_at: "2025-09-13T13:59:51Z"
 statblock: True
 layout: SWSE Creature
 ---
