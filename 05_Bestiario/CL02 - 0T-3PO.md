@@ -2,7 +2,7 @@
 system: swse
 monster: "0T-3PO"
 name: "0T-3PO"
-bestiary: True
+bestiary: true
 type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 1/Scoundrel 2"
 cl: 2
@@ -13,12 +13,12 @@ reflex: ""
 fortitude: ""
 will: ""
 hp: 9
-threshold: ""
+threshold: 11
 speed: 6 Squares (Walking)
 melee: []
 ranged: []
 attackOptions: ""
-specialActions: "Disruptive'''"
+specialActions: Disruptive
 specialQualities: []
 talents: []
 feats: []
@@ -39,9 +39,9 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0T-3PO"
 source_book: ""
 tags: [bestiario, swse, cl/2, type/heroic]
-import_hash: bf4970817854da80d62eeeeda206511514c95a52
-imported_at: "2025-09-13T14:22:03Z"
-statblock: True
+import_hash: bc41b1564853f22288121b0ed176532c816a538b
+imported_at: "2025-09-13T15:36:27Z"
+statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
 ---

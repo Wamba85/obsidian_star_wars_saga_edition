@@ -106,8 +106,8 @@ def clean_text(txt: str) -> str:
     if not txt:
         return ""
     s = mwparserfromhell.parse(txt).strip_code()
-    s = re.sub(r"^'{2,3}\s*", "", s)         # rimuovi ''' iniziali
-    s = re.sub(r"\s+", " ", s).strip().strip(" ,;")
+    s = re.sub(r"'{2,3}", "", s)   # rimuovi '' e '''
+    s = re.sub(r"\s+", " ", s).strip(" \t,;")
     return s
 
 def split_list(s: str) -> list[str]:
@@ -261,38 +261,46 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     initiative = _grab_first(re.compile(r"\bInitiative\s*:\s*([^\n]+)", re.IGNORECASE), t)
     initiative = clean_text(initiative)
 
-    # Senses + Perception extraction
-    senses_raw = _grab_first(re.compile(r"\bSenses\s*:\s*([^\n]+)", re.IGNORECASE), t)
+    # Senses + Perception
+    senses_raw = _grab_first(re.compile(r"\bSenses\s*:?\s*([^\n]+)", re.IGNORECASE), t)
     perception_num = None
 
-    # caso standard: "Senses: ... Perception +X"
     if senses_raw:
         m = re.search(r'Perception\s*\+?(-?\d+)', senses_raw, re.IGNORECASE)
         if m:
             perception_num = m.group(1)
             senses_raw = re.sub(r'[,;]?\s*Perception\s*\+?-?\d+', '', senses_raw, flags=re.IGNORECASE)
 
-    # fallback: riga "Perception +X" senza Senses
     if perception_num is None:
         m = re.search(r"^\s*'{0,3}\s*Perception\s*\+?(-?\d+)\s*$", t, re.IGNORECASE | re.MULTILINE)
         if m:
             perception_num = m.group(1)
-            senses_raw = ""  # nessun altro senso dichiarato
+            senses_raw = ""
 
     senses = clean_text(senses_raw)
     perception = ""
     if perception_num is not None:
         perception = perception_num if str(perception_num).startswith(("+","-")) else f"+{perception_num}"
 
-
     # Defenses
-    reflex = clean_text(_grab_first(re.compile(r"\bReflex(?: Defense)?\s*:\s*([^\n]+)", re.IGNORECASE), t))
-    fortitude = clean_text(_grab_first(re.compile(r"\bFortitude(?: Defense)?\s*:\s*([^\n]+)", re.IGNORECASE), t))
-    will = clean_text(_grab_first(re.compile(r"\bWill(?: Defense)?\s*:\s*([^\n]+)", re.IGNORECASE), t))
+    defense_any = clean_text(_grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t))
+
+    def grab_def(name):
+        # prova "Reflex: ..." oppure "Reflex ..." ovunque
+        m = re.search(rf"\b{name}(?:\s*Defense)?\s*:?\s*([0-9][^,;\n]*)", t, re.IGNORECASE)
+        if m: return clean_text(m.group(1))
+        if defense_any:
+            m = re.search(rf"\b{name}\b(?:\s*Defense)?\s*([0-9][^,;]*)", defense_any, re.IGNORECASE)
+            if m: return clean_text(m.group(1))
+        return ""
+
+    reflex    = grab_def("Reflex")
+    fortitude = grab_def("Fortitude")
+    will      = grab_def("Will")
 
     # HP e Threshold (anche su stessa riga)
-    hp_line = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:\s*([^\n]+)", re.IGNORECASE), t)
-    threshold_line = _grab_first(re.compile(r"\bDamage Threshold\s*:\s*([^\n]+)", re.IGNORECASE), t)
+    hp_line        = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    threshold_line = _grab_first(re.compile(r"\bDamage Threshold\s*:?\s*([^\n]+)", re.IGNORECASE), t)
 
     def extract_first_int(s: str):
         if not s: return ""
@@ -305,7 +313,7 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     # (ma noi usiamo int, quindi non serve oltre a pulizia)
 
     # Speed
-    speed = clean_text(_grab_first(re.compile(r"\bSpeed\s*:\s*([^\n]+)", re.IGNORECASE), t))
+    speed = clean_text(_grab_first(re.compile(r"\bSpeed\s*:?\s*([^\n]+)", re.IGNORECASE), t))
 
     # Attacks
     melee_lines = _grab_all_lines("Melee", t)
@@ -314,8 +322,8 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     ranged = explode_attacks(ranged_lines)
 
     # Options / Actions
-    attack_opts = clean_text(_grab_first(re.compile(r"\bAttack Options\s*:\s*([^\n]+)", re.IGNORECASE), t))
-    special_actions = clean_text(_grab_first(re.compile(r"\bSpecial Actions\s*:\s*([^\n]+)", re.IGNORECASE), t))
+    attack_opts     = clean_text(_grab_first(re.compile(r"\bAttack Options\s*:?\s*([^\n]+)", re.IGNORECASE), t))
+    special_actions = clean_text(_grab_first(re.compile(r"\bSpecial Actions\s*:?\s*([^\n]+)", re.IGNORECASE), t))
 
     # Lists
     talents = split_list(_grab_first(re.compile(r"\bTalents\s*:\s*([^\n]+)", re.IGNORECASE), t))
@@ -430,6 +438,8 @@ def dump_frontmatter(frontmatter: dict) -> str:
     return "\n".join(lines)
 
 def _yaml_escape(v):
+    if isinstance(v, bool):
+        return "true" if v else "false"
     if v is None:
         return "null"
     s = str(v)

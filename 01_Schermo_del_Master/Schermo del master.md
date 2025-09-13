@@ -96,36 +96,7 @@ action QuickAdd: Nuovo Talento
 
 
 ```statblock
-custom: SWSE Creature
-data:
-  name: 7-A39 (SevenAy)
-  type: Heroic
-  cl: 1
-  initiative:
-  senses: Perception +8
-  perception:
-  reflex:
-  fortitude:
-  will:
-  hp: 10
-  threshold: 10
-  speed: Immobile
-  melee: []
-  ranged: []
-  attackOptions:
-  specialActions:
-  specialQualities: []
-  talents: []
-  feats: []
-  skills: []
-  useTheForce:
-  forcePowers: []
-  equipment: []
-  abilities: Str 10; Dex 12; Con -; Int 14; Wis 13; Cha 14
-  languages: Basic, Binary; Translator Unit (DC 10)
-  notes:
-  monster: "7-A39 (SevenAy)"
-  source: SWSE Wiki – https://swse.fandom.com/wiki/7-A39
+monster: A'Sharad Hett
   ```
 ```statblock
 monster: 7-A39 (SevenAy)

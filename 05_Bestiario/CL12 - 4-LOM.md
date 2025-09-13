@@ -2,7 +2,7 @@
 system: swse
 monster: "4-LOM"
 name: "4-LOM"
-bestiary: True
+bestiary: true
 type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 1/Noble 1/Scoundrel 5/Scout 3/Bounty Hunter 3"
 cl: 12
@@ -13,12 +13,12 @@ reflex: ""
 fortitude: ""
 will: ""
 hp: 54
-threshold: ""
-speed: "6 Squares (Walking); Expert Tracker'''"
+threshold: 24
+speed: 6 Squares (Walking); Expert Tracker
 melee: []
 ranged: []
 attackOptions: "Autofire (Heavy Blaster Rifle), Hunter's Mark, Point-Blank Shot"
-specialActions: "Educated, Familiar Foe (+1), Gimmick, Hunter's Target''', Knack"
+specialActions: "Educated, Familiar Foe (+1), Gimmick, Hunter's Target, Knack"
 specialQualities: []
 talents: []
 feats: []
@@ -39,9 +39,9 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/4-LOM"
 source_book: ""
 tags: [bestiario, swse, cl/12, type/heroic]
-import_hash: 90218834e32315f298bf142a47151d48180fd2af
-imported_at: "2025-09-13T14:22:04Z"
-statblock: True
+import_hash: 3fc1292f7a398f12d7044485358dd89f1873c8a6
+imported_at: "2025-09-13T15:36:28Z"
+statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
 ---

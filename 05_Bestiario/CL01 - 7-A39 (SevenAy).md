@@ -2,7 +2,7 @@
 system: swse
 monster: "7-A39 (SevenAy)"
 name: "7-A39 (SevenAy)"
-bestiary: True
+bestiary: true
 type: Heroic
 type_line: "Medium 3rd-Degree Droid Nonheroic 4"
 cl: 1
@@ -13,7 +13,7 @@ reflex: ""
 fortitude: ""
 will: ""
 hp: 10
-threshold: ""
+threshold: 10
 speed: Immobile
 melee: []
 ranged: []
@@ -39,9 +39,9 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
 source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
-import_hash: 3e8c8d778f301653618273ac60e7caf7ac770d59
-imported_at: "2025-09-13T14:22:05Z"
-statblock: True
+import_hash: 0801e5d4f5891a9b4d343dcf2cbe333707ff9a2d
+imported_at: "2025-09-13T15:36:28Z"
+statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
 ---
