@@ -2,18 +2,19 @@
 system: swse
 monster: "A'Sharad Hett"
 name: "A'Sharad Hett"
+bestiary: True
 type: Heroic
 type_line: Medium Human Scout 3/Jedi 6/Jedi Knight 5
 cl: 14
 initiative: ""
-senses: "''' Improved Sense Surroundings, Perception +15"
+senses: "Improved Sense Surroundings, Perception +15"
 perception: ""
 reflex: ""
 fortitude: ""
 will: ""
 hp: 137
 threshold: ""
-speed: "''' 6 Squares"
+speed: 6 Squares
 melee: []
 ranged: []
 attackOptions: "Twin Weapon Style'''"
@@ -24,7 +25,7 @@ feats: []
 skills: []
 useTheForce: ""
 forcePowers: ["' Battle Strike, Force Slam, Pushing Slash, Surge (2), Rising Whirlwind, Twin Strike, Vital Transfer''"]
-equipment: ["''' Lightsaber (Self-Built)", "Sharad Hett's Lightsaber (Legendary Icon), Utility Belt", Tusken Robes]
+equipment: ["Lightsaber (Self-Built)", "Sharad Hett's Lightsaber (Legendary Icon), Utility Belt", Tusken Robes]
 abilities: Str 14; Dex 16; Con 13; Int 13; Wis 17; Cha 13
 stats:
   Str: 14
@@ -33,13 +34,14 @@ stats:
   Int: 13
   Wis: 17
   Cha: 13
-languages: "''' Basic, Tusken"
+languages: "Basic, Tusken"
 notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/A'Sharad_Hett"
 source_book: ""
 tags: [bestiario, swse, cl/14, type/heroic]
-import_hash: 49c593a714be4156c5cc4d2dcf8bb890ee947ba0
-imported_at: "2025-09-13T13:59:52Z"
+import_hash: 3645c18e71675a0f785e988b96be7ba0751ce2bf
+imported_at: "2025-09-13T14:22:06Z"
 statblock: True
+layoutId: "swse-creature-layout"
 layout: SWSE Creature
 ---

@@ -1,3 +1,6 @@
+---
+monster: 0-0-0 (Triple-Zero)
+---
 ```button
 name Nuovo Feat
 type command
@@ -124,3 +127,10 @@ data:
   monster: "7-A39 (SevenAy)"
   source: SWSE Wiki – https://swse.fandom.com/wiki/7-A39
   ```
+```statblock
+monster: 7-A39 (SevenAy)
+```
+
+```statblock
+monster: 0-0-0 (Triple-Zero)
+```

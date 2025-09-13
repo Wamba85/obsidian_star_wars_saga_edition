@@ -105,11 +105,9 @@ def make_link_resolver(vault_path: str, slug_index: dict):
 def clean_text(txt: str) -> str:
     if not txt:
         return ""
-    # rimuovi markup wiki e normalizza spazi
     s = mwparserfromhell.parse(txt).strip_code()
-    s = re.sub(r'\s+', ' ', s).strip()
-    # rimuovi punteggiatura residua inizio/fine
-    s = s.strip(" ,;")
+    s = re.sub(r"^'{2,3}\s*", "", s)         # rimuovi ''' iniziali
+    s = re.sub(r"\s+", " ", s).strip().strip(" ,;")
     return s
 
 def split_list(s: str) -> list[str]:
@@ -266,20 +264,26 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     # Senses + Perception extraction
     senses_raw = _grab_first(re.compile(r"\bSenses\s*:\s*([^\n]+)", re.IGNORECASE), t)
     perception_num = None
+
+    # caso standard: "Senses: ... Perception +X"
     if senses_raw:
         m = re.search(r'Perception\s*\+?(-?\d+)', senses_raw, re.IGNORECASE)
         if m:
             perception_num = m.group(1)
-            # rimuovi il segmento "Perception +X" da senses
             senses_raw = re.sub(r'[,;]?\s*Perception\s*\+?-?\d+', '', senses_raw, flags=re.IGNORECASE)
-    # se non trovato in Senses, cerca altrove
+
+    # fallback: riga "Perception +X" senza Senses
     if perception_num is None:
-        m = re.search(r'\bPerception\s*\+?(-?\d+)', t, re.IGNORECASE)
+        m = re.search(r"^\s*'{0,3}\s*Perception\s*\+?(-?\d+)\s*$", t, re.IGNORECASE | re.MULTILINE)
         if m:
             perception_num = m.group(1)
+            senses_raw = ""  # nessun altro senso dichiarato
+
     senses = clean_text(senses_raw)
-    perception = f"+{perception_num}" if perception_num is not None and not str(perception_num).startswith(('+','-')) else (perception_num or "")
-    perception = str(perception).strip()
+    perception = ""
+    if perception_num is not None:
+        perception = perception_num if str(perception_num).startswith(("+","-")) else f"+{perception_num}"
+
 
     # Defenses
     reflex = clean_text(_grab_first(re.compile(r"\bReflex(?: Defense)?\s*:\s*([^\n]+)", re.IGNORECASE), t))
@@ -564,6 +568,7 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
                 # identificazione
                 'monster': name,          # aiuta l’indicizzazione del plugin
                 'name': name,
+                'bestiary': True, 
                 'type': logical_type,     # header layout
                 'type_line': blk['type_line'],  # dettaglio di classe/taglia
                 'cl': cl_int,
@@ -606,6 +611,7 @@ def import_entity(entity, vault_path, limit=0, dry_run=False, force=False):
                 'imported_at': iso_now_utc(),
                 # Fantasy Statblocks
                 'statblock': True,
+                'layoutId': 'swse-creature-layout',
                 'layout': "SWSE Creature"
             }
 
