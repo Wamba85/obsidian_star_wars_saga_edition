@@ -265,27 +265,23 @@ def extract_fields_from_block(name_guess: str, cl_guess: int | None, text: str) 
     if perception_num is not None:
         perception = perception_num if str(perception_num).startswith(("+","-")) else f"+{perception_num}"
 
-    # Defenses (valori + varianti tra parentesi; extra dopo ';' -> defenseFeats)
-    def_line_raw = _grab_first(re.compile(r"\bDefen(?:s|c)es?\s*:?\s*([^\n]+)", re.IGNORECASE), t)
+    # Defenses — prendi solo la riga, poi pulisci e splitta su ';'
+    m_def = re.search(r"^\s*Defen(?:s|c)es?\s*:?\s*(.+)$", t, re.IGNORECASE | re.MULTILINE)
+    def_line_raw = m_def.group(1) if m_def else ""
     def_line = clean_text(def_line_raw)
-    if ";" in def_line:
-        def_main, def_extras = def_line.split(";", 1)
-    else:
-        def_main, def_extras = def_line, ""
 
-    defense_feats = split_list(def_extras)
+    # separa eventuali extra dopo ';' (talent/feat difensivi)
+    def_main, def_extras = (def_line.split(";", 1) + [""])[:2] if ";" in def_line else (def_line, "")
+    defense_feats = [re.sub(r"\.$", "", x) for x in split_list(def_extras)]
 
-    def extract_def(name: str) -> str:
-        # Cerca prima su tutto il testo per gestire markup ('''29'''), poi nella riga "Defenses"
-        pat = rf"\b{name}(?:\s*Defense)?\s*:?\s*([^\n,;]+)"
-        m = re.search(pat, t, re.IGNORECASE)
-        if not m:
-            m = re.search(pat, def_main, re.IGNORECASE)
+    def extract_def_from_main(label: str) -> str:
+        # es. "Reflex Defense: 29 (Flat-Footed: 26 (Jar'Kai: 31))"
+        m = re.search(rf"\b{label}(?:\s*Defense)?\s*:\s*([^,;]+)", def_main, re.IGNORECASE)
         return clean_text(m.group(1)) if m else ""
 
-    reflex    = extract_def("Reflex")
-    fortitude = extract_def("Fortitude")
-    will      = extract_def("Will")
+    reflex    = extract_def_from_main("Reflex")
+    fortitude = extract_def_from_main("Fortitude")
+    will      = extract_def_from_main("Will")
 
     # HP e Threshold
     hp_line        = _grab_first(re.compile(r"\b(?:Hit Points?|HP)\s*:?\s*([^\n]+)", re.IGNORECASE), t)

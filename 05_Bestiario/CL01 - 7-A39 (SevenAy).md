@@ -9,9 +9,9 @@ cl: 1
 initiative: ""
 senses: ""
 perception: +8
-reflex: "]]: 11 (Flat-Footed: 10)"
-fortitude: "]]: 10"
-will: "]]: 11"
+reflex: ""
+fortitude: ""
+will: ""
 defenseFeats: []
 hp: 10
 threshold: 10
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/7-A39"
 source_book: ""
 tags: [bestiario, swse, cl/1, type/heroic]
-import_hash: 330b33ec8b1eae43dcb48790bf21f78a63a1b760
-imported_at: "2025-09-13T16:17:58Z"
+import_hash: 171b188fa615abcf3c20e2626b645816ec668d76
+imported_at: "2025-09-17T15:47:23Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

@@ -9,9 +9,9 @@ cl: 2
 initiative: ""
 senses: ""
 perception: +2
-reflex: "]]: 13 (Flat-Footed: 13)"
-fortitude: "]]: 11"
-will: "]]: 14"
+reflex: ""
+fortitude: ""
+will: ""
 defenseFeats: []
 hp: 9
 threshold: 11
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0T-3PO"
 source_book: ""
 tags: [bestiario, swse, cl/2, type/heroic]
-import_hash: b75a358e7c5e24774633e97e920bb0f8cd5b4673
-imported_at: "2025-09-13T16:17:55Z"
+import_hash: bb33380441fce35f2c198a24ad5728aea224c51e
+imported_at: "2025-09-17T15:47:21Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

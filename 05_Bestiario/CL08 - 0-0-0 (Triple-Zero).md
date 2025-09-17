@@ -9,9 +9,9 @@ cl: 8
 initiative: ""
 senses: ""
 perception: +7
-reflex: "]]: 19 (Flat-Footed: 19)"
-fortitude: "]]: 15"
-will: "]]: 23 (28 vs Reprogramming)"
+reflex: ""
+fortitude: ""
+will: ""
 defenseFeats: []
 hp: 42
 threshold: 15
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/0-0-0"
 source_book: ""
 tags: [bestiario, swse, cl/8, type/heroic]
-import_hash: 685aa045bde627a1cd2c28d923a315f9eff62ff6
-imported_at: "2025-09-13T16:17:54Z"
+import_hash: 0b7bd9115e923e83367c936a0bb9a85c183d855e
+imported_at: "2025-09-17T15:47:20Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

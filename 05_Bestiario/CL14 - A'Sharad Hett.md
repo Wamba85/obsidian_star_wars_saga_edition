@@ -9,9 +9,9 @@ cl: 14
 initiative: ""
 senses: Improved Sense Surroundings
 perception: +15
-reflex: "]]: 29 (Flat-Footed: 26 (Jar'Kai: 31))"
-fortitude: "]]: 28"
-will: "]]: 29"
+reflex: ""
+fortitude: ""
+will: ""
 defenseFeats: []
 hp: 137
 threshold: 28
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/A'Sharad_Hett"
 source_book: ""
 tags: [bestiario, swse, cl/14, type/heroic]
-import_hash: b1d454436c2e7c5b0f304d9464a6627dc5c79ddb
-imported_at: "2025-09-13T16:17:58Z"
+import_hash: 93e42a39c8eea9f503a78ed8ba34dfe98c640b8d
+imported_at: "2025-09-17T15:47:24Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature

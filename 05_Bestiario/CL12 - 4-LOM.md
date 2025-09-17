@@ -9,9 +9,9 @@ cl: 12
 initiative: ""
 senses: ""
 perception: +12
-reflex: "]]: 27 (Flat-Footed: 26)"
-fortitude: "]]: 24"
-will: "]]: 25"
+reflex: ""
+fortitude: ""
+will: ""
 defenseFeats: []
 hp: 54
 threshold: 24
@@ -34,8 +34,8 @@ notes: ""
 source: "SWSE Wiki – https://swse.fandom.com/wiki/4-LOM"
 source_book: ""
 tags: [bestiario, swse, cl/12, type/heroic]
-import_hash: c1c004e54bcb70bca5077679ba6d891f320450af
-imported_at: "2025-09-13T16:17:56Z"
+import_hash: b732dcb4dafbfbef74679e37b5f922b523523b1e
+imported_at: "2025-09-17T15:47:22Z"
 statblock: true
 layoutId: "swse-creature-layout"
 layout: SWSE Creature
